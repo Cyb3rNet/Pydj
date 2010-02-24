@@ -12,67 +12,105 @@ class GTInsertException extends Exception
 }
 
 
-
-
-
-
-
-class Pdgen
+class PdgenStep
 {
-	const iGTIStep1 = 1;
-	const iGTIStep2 = 2;
-	const iGTIStep3 = 3;
-	const iGTIStep4 = 4;
-	const iGTIStep5 = 5;
+	const 
+
+	public function __construct($iNo, $sName, $aNos)
+	{
+	
+	}
+	
+	
+	public function Get
+}
+
+
+class PdgenChainStep
+{
+	const StepInit	= -1;
+	const StepId	= 0;
+	const StepTag	= 1;
+	const StepAttr	= 2;
+	const StepVal	= 3;
+	const StepCntnt	= 4;
+
+	public function __construct()
+	{
+		$this->_iStep = 0;
+	}
+	
+	public function SetStep($i)
+	{
+		$this->_iStep = $i;
+	}
+	
+	public function GetLastStep()
+}
+
+
+class GenTree
+{
+	const GTIStep1 = 1;
+	const GTIStep2 = 2;
+	const GTIStep3 = 3;
+	const GTIStep4 = 4;
+	const GTIStep5 = 5;
+
 	
 	////
 	// get functions
 	////
 
-	private function _gAttrValsGT()
-	{
-		return array(array());
-	}
-
-	private function _gAttrsGT()
-	{
-		return array($this->_getAttrValsGT());
-	}
-
-	private function _gTagGT()
-	{
-		return array($this->_getAttrsGT());
-	}
-
+	
 	private function _gFullGT()
 	{
-		return array($this->_getTagGT());
-	}
+		$aCntnt = array();
 	
-	//// Get last step
+		$aVal = array($aCntnt);
+	
+		$aAttr = array($aVal);
+	
+		$aTag = array($aAttr);
+	
+		return array($aTag);
+	}
+
+	
+	//// Get last chain step
 	//
-	private function _gLS()
+	private function _gLCS()
 	{
 		return $this->_iLS;
 	}
+
 	
 	////
 	// set functions
 	////
+
 	
-	//// Set last step
+	//// Set last chain step
 	//
-	private function _sLS($i)
+	private function _sLCS($v)
 	{
-		$this->_iLS = $i;
+		if ($v instanceof ChainStep)
+		{
+			$this->_oCS = $v;
+		}
+		else
+			$this->_oCS->SetStep($v);
 	}
+
 	
 	////
 	//// PUBLIC
 	////
-
+	
+	
 	public function __construct()
 	{
+	
 		$this->_aGT = $this->_getFullGT();
 
 		// last inserted id
@@ -84,21 +122,24 @@ class Pdgen
 		// last inserted val
 		$this->_lval = "";
 		
-		$this->_sLS(0);
+		$this->_sLCS(new ChainStep());
+
 	}
-	
+
+		
 	//// GT Insert Step 1: Set Id in GenTree
 	//
 	public function &Id($sId)
 	{
 		$this->_lid = $sId;
 		
-		$this->_aGT[$sId] = $this->_getTagGT();
+		$this->_aGT[$sId];
 		
-		echo "1";
+		$this->_sLCS(
 		
 		return $this;
 	}
+
 	
 	//// GT Insert Step 2: Set Tag in GenTree
 	//
@@ -106,7 +147,7 @@ class Pdgen
 	{
 		$this->_ltag = $sTag;
 		
-		$this->_aGT[$this->_lId][$sTag] = $this->_getAttrsGT();
+		$this->_aGT[$this->_lId][$sTag];
 		
 		echo "2";
 		
@@ -119,7 +160,7 @@ class Pdgen
 	{
 		$this->_lat = $sAttr;
 		
-		$this->_aGT[$this->_lid][$this->_ltag][$sAttr] = $this->_getAttrValsGT();
+		$this->_aGT[$this->_lid][$this->_ltag][$sAttr];
 		
 		echo "3";
 		
@@ -130,7 +171,7 @@ class Pdgen
 	//
 	public function &Val($sVal)
 	{
-		$this->_aGT[$this->_lid][$this->_ltag][$this->_lat][$sVal] = array();
+		$this->_aGT[$this->_lid][$this->_ltag][$this->_lat][$sVal];
 		
 		echo "4";
 		
@@ -141,7 +182,7 @@ class Pdgen
 	//
 	public function Content($sCntnt)
 	{
-		switch ($this->_gLS())
+		switch ($this->_gLCS())
 		{
 			case self::iGTIStep1:
 			case self::iGTIStep2:
@@ -152,18 +193,35 @@ class Pdgen
 				throw new GTInsertException("");
 		}
 	}
+}
 
-	public function GetGenTree()
+
+class Pdgen extends GenTree
+{
+	// document title
+	private $_sDT;
+	// document language
+	private $_sDL;
+
+
+	
+	////
+	//// PUBLIC
+	////
+
+	
+	public function __construct($sTitle, $sLang)
+	{
+		$this->_sDT = $sTitle;
+		$this->_sDL = $sLang;
+	}
+
+
+	public function Flush()
 	{
 		return $this->_aGT;
 	}
 }
 
-$t = new TestRef();
-
-$t->Tag("a")->Attr("href")->Val("http://www.github.com")->Content("github.com");
-//$t->setRef("a")["title"]["github.com"];
-
-print_r($t->GetGenTree());
 
 ?>

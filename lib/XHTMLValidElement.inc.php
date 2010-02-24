@@ -49,7 +49,7 @@ class XHTMLValidElement extends MLElement
 	}
 
 	
-	public function SetValidator()
+	public function SetValidator($oXHTMLValidator)
 	{
 		$this->_oXHTMLValidator = $oXHTMLValidator;
 	}

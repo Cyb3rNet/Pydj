@@ -10,11 +10,11 @@
 	
 	$oPdgen = new Pdgen();
 	
-	// Reg defaults on a div
+	// Reg() defaults on a div
 	// Inserts div in body, root of tree
 	$oPdgen->Reg("#myId");
 	
-	// Insert into #myId
+	// Insert into #myId, last registered id
 	$oPdgen->Insert($oPdgen->Tag("a")->Attr("href")->Val("http://www.github.com"));
 	
 	// Echoes XHTML document

@@ -7,14 +7,11 @@ include("../lib/Pdgen.inc.php");
 
 $sTitle = "My first Pdgen document";
 
-$oPiP = new Pdgen($sTitle);
+$t = new Pdgen();
 
-// Reg defaults on a div
-$oPiP->Reg("#myId");
+$t->Tag("a")->Attr("href")->Val("http://www.github.com")->Content("github.com");
 
-// Retains last registered id myId
-$oPiP->Insert($oPiP->Tag("a")["href"]["http://www.github.com"]);
+$t->Flush();
 
-$oPiP->Flush();
 
 ?>
