@@ -15,7 +15,7 @@
 	$oPdgen->Reg("#myId");
 	
 	// Insert into #myId
-	$oPdgen->Insert($oPdgen->Tag("a")["href"]["http://www.github.com"]);
+	$oPdgen->Insert($oPdgen->Tag("a")->Attr("href")->Val("http://www.github.com"));
 	
 	// Echoes XHTML document
 	$oPdgen->Flush();

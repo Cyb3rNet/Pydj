@@ -13,8 +13,12 @@ class XHTMLValidElement extends MLElement
 	private $_vContent;
 
 	
+	private $_aChildTags;
+
+	
 	private $_oXHTMLValidator;
 
+	
 	private function _getXHTMLElementRule()
 	{
 		return $this->_oXHTMLValidator->GetElementRule();
@@ -25,7 +29,7 @@ class XHTMLValidElement extends MLElement
 	{
 		try {
 			
-			$this->_oXHTMLValidator->Validate($this->_sTag, $this->_aAttrs, $this->_sContentTag);
+			$this->_oXHTMLValidator->Validate($this->_sTag, $this->_aAttrs, $this->_aChildTags);
 		}
 		catch (XHTMLException $e) {
 			throw $e;
@@ -40,18 +44,26 @@ class XHTMLValidElement extends MLElement
 		$this->_sTag = $sTag;
 		$this->_aAttrs = $aAttrs;
 		$this->_vContent = $vContent;
+		
+		$this->_aChildTags = array();
 	}
 
+	
+	public function SetValidator()
+	{
+		$this->_oXHTMLValidator = $oXHTMLValidator;
+	}
+	
 	
 	public function AppendContent($vContent)
 	{
 		if ($vContent instanceof XHTMLValidElement)
 		{
-			$this->_sContentTag = $vContent->GetTag();
+			$this->_aChildTags[] = $vContent->GetTag();
 		}
 		else if (is_string($vContent))
 		{
-			$this->_sContentTag = self::dataContent;
+			$this->_aChildTags[] = self::dataContent;
 		}
 		else
 		{
@@ -83,6 +95,8 @@ class XHTMLValidElement extends MLElement
 		catch (XHTMLException $e) {
 			throw $e;
 		}
+		
+		return parent::__toString();
 	}
 }
 
