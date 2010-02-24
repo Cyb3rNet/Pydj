@@ -1,19 +1,100 @@
 <?php
 
+//include("../lib/Pdgen.inc.php");
 
-// Pdgen
-// Generates XHTML documents
+//// Array actualisation through reference by a class method
+//
+class TestRef
+{
+	private function _getAttrValsGT()
+	{
+		return array(array());
+	}
 
-$sTitle = "My first Pdgen document";
+	private function _getAttrsGT()
+	{
+		return array($this->_getAttrValsGT());
+	}
 
-$oPiP = new Pdgen($sTitle);
+	private function _getTagGT()
+	{
+		return array($this->_getAttrsGT());
+	}
 
-// Reg defaults on a div
-$oPiP->Reg("#myId");
+	private function _getFullGT()
+	{
+		return array($this->_getTagGT());
+	}
 
-// Retains last registered id myId
-$oPiP->Insert($oPiP->Tag("a")["href"]["http://www.github.com"]);
+	public function __construct()
+	{
+		$this->_aGT = $this->_getFullGT();
 
-$oPiP->Flush();
+		$this->_lid = "";
+		$this->_ltag = "";
+		$this->_lat = "";
+	}
+	
+	public function &Id($sId)
+	{
+		$this->_lid = $sId;
+		
+		$this->_aGT[$sId] = $this->_getTagGT();
+		
+		echo "1";
+		
+		return $this;
+	}
+	
+	public function &Tag($sTag)
+	{
+		$this->_ltag = $sTag;
+		
+		$this->_aGT[$this->_lId][$sTag] = $this->_getAttrsGT();
+		
+		echo "2";
+		
+		return $this;
+	}
+
+	public function &Attr($sAttr)
+	{
+		$this->_lat = $sAttr;
+		
+		$this->_aGT[$this->_lid][$this->_ltag][$sAttr] = $this->_getAttrValsGT();
+		
+		echo "3";
+		
+		return $this;
+	}
+
+	public function &Val($sVal)
+	{
+		$this->_aGT[$this->_lid][$this->_ltag][$this->_lat][$sVal] = array();
+		
+		echo "4";
+		
+		return $this;
+	}
+
+	public function Content($sCntnt)
+	{
+		$this->_aGT[$this->_lid][$this->_ltag][$this->_lat][$sVal][$sCntnt];
+		
+		echo "5";
+	}
+
+	public function GetArray()
+	{
+		return $this->_aGT;
+	}
+}
+
+$t = new TestRef();
+
+$t->Tag("a")->Attr("href")->Val("http://www.github.com")->Content("github.com");
+//$t->setRef("a")["title"]["github.com"];
+
+print_r($t->GetArray());
 
 ?>
