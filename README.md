@@ -1,6 +1,6 @@
 >> Pdgen by Cyb3r
 >>
->> Version 0.0
+>> Version 0.1
 >>
 >> Quick XML/HTML Document Creation / PHP 5
 
