@@ -15,7 +15,18 @@
 	$oPdgen->Reg("#myId");
 	
 	// Insert into #myId, last registered id
-	$oPdgen->Insert($oPdgen->Tag("a")->Attr("href")->Val("http://www.github.com"));
+	$oPdgen->Content($oPdgen->Tag("a")->Attr("href")->Val("http://www.github.com"));
+	
+	$oPdgen->Tag("p")->Tag("span")->Content("Hello World!");
 	
 	// Echoes XHTML document
 	$oPdgen->Flush();
+	
+## Methods
+
+$this
+Id()
+Tag()
+	Attr()
+		Val()
+	Content()
