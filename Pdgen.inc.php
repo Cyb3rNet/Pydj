@@ -20,9 +20,32 @@ class Pdgen
 	}
 
 	
-	private function _genTag($sTag, $sAttrs, $sContent)
+	private function _openTag($sTag, $aAttrs = array())
 	{
+		$this->_oXW->startElement($sTag);
 		
+		foreach ($aAttrs as $sAttr => $sVal)
+		{
+			$this->_genAttr($sAttr, $sVal);
+		}
+	}
+	
+	
+	private function _closeTag()
+	{
+		$this->_oXW->endElement();
+	}
+	
+	
+	private function _genTag($sTag, $sContent)
+	{
+		$this->_oXW->writeElement($sTag, $sContent);
+	}
+	
+	
+	private function _genAttr($sAttr, $sVal)
+	{
+		$this->_oXW->writeAttribute($sAttr, $sVal);
 	}
 	
 	
@@ -32,23 +55,38 @@ class Pdgen
 	}
 
 	
+	private function _genHead()
+	{
+		$this->_openTag("head");
+		
+		$this->_genTag("title", $this->_sDT);
+		
+		$this->_closeTag();
+	}
+	
 	////
 	//// PUBLIC
 	////
 
 	
-	public function __construct($sTitle, $sLang)
+	public function __construct($sTitle, $sLang = 'en')
 	{
 		$this->_sDT = $sTitle;
 		$this->_sDL = $sLang;
 		
-		$this-_startXMLWriter();
+		$this->_startXMLWriter();
+		
+		$this->_openTag("html");
+		
+		$this->_genHead();
+		
+		$this->_openTag("body");
 	}
 	
 	
 	public function &Id($sId)
 	{
-		$this->_genTag(self::defaultTag, array('id' => $sId));
+		$this->_openTag(self::defaultTag, array('id' => $sId));
 		
 		return $this;
 	}
@@ -56,31 +94,39 @@ class Pdgen
 	
 	public function &Tag($sTag)
 	{
-		$this->_genTag($sTag, array('id' => $sId));
+		$sId = $this->_gUniqId();
+	
+		$this->_openTag($sTag, array('id' => $sId));
 	
 		return $this;
 	}
 	
-	public function &Attr($sAttr)
+	public function &Attr($sAttr, $sVal)
 	{
+		$this->_genAttr($sAttr, $sVal);
 		
 		return $this;
 	}
-	
-	public function &Val($sVal)
-	{
-	
-		return $this;
-	}
+
 	
 	public function Content($sContent)
 	{
-	
+		$this->_oXW->text($sContent);
+		
+		$this->_closeTag();
 	}
 	
 	public function Flush()
 	{
+		// body
+		$this->_closeTag();
+		
+		// html
+		$this->_closeTag();
+		
+		$this->_oXW->endDocument();
 	
+		echo $this->_oXW->flush();
 	}
 }
 
