@@ -18,5 +18,7 @@
 	
 	// Echoes XML/HTML document
 	$oPdgen->Flush();
-	
-## Methods
+
+## Tested
+
+~::~ Cyb3r ~::~
