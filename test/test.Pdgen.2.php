@@ -7,11 +7,13 @@ include("../lib/Pdgen.inc.php");
 
 $sTitle = "My first Pdgen document";
 
-$t = new Pdgen();
+$pdg = new Pdgen($sTitle);
 
-$t->Tag("a")->Attr("href")->Val("http://www.github.com")->Content("github.com");
+$pdg->Tag("a")->Attr("href")->Val("http://www.github.com")->Content("github.com");
 
-$t->Flush();
+$pdg->Insert()
+
+$pdg->Flush();
 
 
 ?>

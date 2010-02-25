@@ -97,7 +97,7 @@ class MLElement
 		else
 			$sML = '<'.$this->_sTag.' '.$this->_gAttrsStr().' />';
 		
-		return $sML
+		return $sML;
 	}
 }
 

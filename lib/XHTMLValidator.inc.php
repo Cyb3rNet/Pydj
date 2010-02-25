@@ -25,7 +25,7 @@ class XHTMLValidator
 	
 	public function Validate($sTag, $aAttrs, $aChildTags)
 	{
-		$this->_oElementRules
+		//$this->_oElementRules
 	}
 }
 

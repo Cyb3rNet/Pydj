@@ -2,10 +2,12 @@
 
 include("MLElement.inc.php");
 
+include("XHTMLValidator.inc.php");
+
 class XHTMLValidElement extends MLElement
 {
 	const emptyContent = '';
-	const dataContent = '#PCDATA'
+	const dataContent = '#PCDATA';
 
 	
 	private $_sTag;
@@ -84,7 +86,7 @@ class XHTMLValidElement extends MLElement
 	{
 		try {
 			
-			$this->_isValidXHTML()
+			$this->_isValidXHTML();
 			
 			$oXHTMLElementRule = $this->_getXHTMLElementRule();
 			
