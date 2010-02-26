@@ -12,13 +12,15 @@
 	
 	$oPdgen = new Pdgen($sTitle);
 	
-	$oPdgen->Tag("a")->Attr("href", "http://www.github.com");
+	$oPdgen->Tag("h1")->Content("Hello World!");
 	
-	$oPdgen->Tag("p")->Tag("span")->Content("Hello World!");
+	$oPdgen->Tag("a")->Attr("href", "http://www.github.com")->Content("github.com");
 	
 	// Echoes XML/HTML document
 	$oPdgen->Flush();
 
-## Tested
+## Still Needs Some Work
+
+
 
 ~::~ Cyb3r ~::~
