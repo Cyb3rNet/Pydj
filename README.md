@@ -2,13 +2,13 @@
 >>
 >> Version 0.1
 >>
->> Quick XML/HTML Document Creation / PHP 5
+>> Quick HTML Document Creation / PHP 5
 
 ## Usage
 
     include("Pdgen.inc.php");
 	
-	$sTitle = "My XML/HTML document";
+	$sTitle = "My HTML document";
 	
 	$oPdgen = new Pdgen($sTitle);
 	

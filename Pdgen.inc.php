@@ -4,13 +4,17 @@
 class Pdgen
 {
 	const defaultTag = 'div';
-
+	
+	
 	private $_sDT;
 	private $_sDL;
 	
+	
 	private $_slId;
 	
+	
 	private $_oXW;
+	
 	
 	private function _startXMLWriter()
 	{		
@@ -18,7 +22,7 @@ class Pdgen
 		$this->_oXW->openMemory();
 		$this->_oXW->startDocument("1.0");
 	}
-
+	
 	
 	private function _openTag($sTag, $aAttrs = array())
 	{
@@ -53,7 +57,7 @@ class Pdgen
 	{
 		return rand(0, time());
 	}
-
+	
 	
 	private function _genHead()
 	{
@@ -64,8 +68,28 @@ class Pdgen
 		$this->_closeTag();
 	}
 	
+	private function _startHTML()
+	{
+		$this->_openTag("html");
+		
+		$this->_genHead();
+		
+		$this->_openTag("body");
+	}
+	
+	
+	private function _endHTML()
+	{
+		// body
+		$this->_closeTag();
+		
+		// html
+		$this->_closeTag();
+	}
+	
+	
 	////
-	//// PUBLIC
+	// PUBLIC
 	////
 
 	
@@ -76,11 +100,7 @@ class Pdgen
 		
 		$this->_startXMLWriter();
 		
-		$this->_openTag("html");
-		
-		$this->_genHead();
-		
-		$this->_openTag("body");
+		$this->_startHTML();
 	}
 	
 	
@@ -95,9 +115,9 @@ class Pdgen
 	public function &Tag($sTag)
 	{
 		$sId = $this->_gUniqId();
-	
+		
 		$this->_openTag($sTag, array('id' => $sId));
-	
+		
 		return $this;
 	}
 	
@@ -107,7 +127,7 @@ class Pdgen
 		
 		return $this;
 	}
-
+	
 	
 	public function Content($sContent)
 	{
@@ -116,16 +136,13 @@ class Pdgen
 		$this->_closeTag();
 	}
 	
+	
 	public function Flush()
 	{
-		// body
-		$this->_closeTag();
-		
-		// html
-		$this->_closeTag();
-		
-		$this->_oXW->endDocument();
+		$this->_oXW->_endHTML();
 	
+		$this->_oXW->endDocument();
+		
 		echo $this->_oXW->flush();
 	}
 }
