@@ -11,6 +11,8 @@ class BasePydj
 		$this->_oXW = new XMLWriter();	
 		$this->_oXW->openMemory();
 		$this->_oXW->startDocument("1.0");
+		
+		$this->_oXW->setIndent("\t");
 	}
 	
 	
