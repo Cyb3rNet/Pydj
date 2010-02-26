@@ -1,18 +1,8 @@
 <?php
 
 
-class Pdgen
+class BasePdgen
 {
-	const defaultTag = 'div';
-	
-	
-	private $_sDT;
-	private $_sDL;
-	
-	
-	private $_slId;
-	
-	
 	private $_oXW;
 	
 	
@@ -51,7 +41,75 @@ class Pdgen
 	{
 		$this->_oXW->writeAttribute($sAttr, $sVal);
 	}
+		
 	
+	////
+	// PUBLIC
+	////
+
+	
+	public function __construct()
+	{		
+		$this->_startXMLWriter();
+	}
+	
+	
+	public function &Tag($sTag)
+	{
+		$sId = $this->_gUniqId();
+		
+		$this->_openTag($sTag, array('id' => $sId));
+		
+		return $this;
+	}
+	
+	public function &Attr($sAttr, $sVal)
+	{
+		$this->_genAttr($sAttr, $sVal);
+		
+		return $this;
+	}
+	
+	
+	public function Content($sContent)
+	{
+		$this->_oXW->text($sContent);
+		
+		$this->_closeTag();
+	}
+	
+	
+	public function Flush()
+	{
+		$this->_oXW->endDocument();
+		
+		echo $this->_oXW->flush();
+	}
+}
+
+
+class Pdgen extends BasePdgen
+{
+	const defaultTag = 'div';
+	
+	
+	private $_sDT;
+	private $_sDL;
+	
+	
+	private $_slId;
+	
+	
+	private $_oXW;
+	
+	
+	private function _startXMLWriter()
+	{		
+		$this->_oXW = new XMLWriter();	
+		$this->_oXW->openMemory();
+		$this->_oXW->startDocument("1.0");
+	}
+		
 	
 	private function _gUniqId()
 	{
@@ -98,7 +156,7 @@ class Pdgen
 		$this->_sDT = $sTitle;
 		$this->_sDL = $sLang;
 		
-		$this->_startXMLWriter();
+		parent::__construct();
 		
 		$this->_startHTML();
 	}
@@ -106,7 +164,7 @@ class Pdgen
 	
 	public function &Id($sId)
 	{
-		$this->_openTag(self::defaultTag, array('id' => $sId));
+		parent::Tag(self::defaultTag, array('id' => $sId));
 		
 		return $this;
 	}
@@ -116,14 +174,14 @@ class Pdgen
 	{
 		$sId = $this->_gUniqId();
 		
-		$this->_openTag($sTag, array('id' => $sId));
+		parent::Tag($sTag, array('id' => $sId));
 		
 		return $this;
 	}
 	
 	public function &Attr($sAttr, $sVal)
 	{
-		$this->_genAttr($sAttr, $sVal);
+		parent::Attr($sAttr, $sVal);
 		
 		return $this;
 	}
@@ -131,19 +189,15 @@ class Pdgen
 	
 	public function Content($sContent)
 	{
-		$this->_oXW->text($sContent);
-		
-		$this->_closeTag();
+		parent::Content($sContent);
 	}
 	
 	
 	public function Flush()
 	{
 		$this->_oXW->_endHTML();
-	
-		$this->_oXW->endDocument();
 		
-		echo $this->_oXW->flush();
+		echo parent::Flush();
 	}
 }
 
