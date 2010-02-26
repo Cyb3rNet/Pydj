@@ -3,7 +3,7 @@
 
 class BasePydj
 {
-	private $_oXW;
+	protected $_oXW;
 	
 	
 	private function _startXMLWriter()
@@ -14,7 +14,7 @@ class BasePydj
 	}
 	
 	
-	private function _openTag($sTag, $aAttrs = array())
+	protected function _openTag($sTag, $aAttrs = array())
 	{
 		$this->_oXW->startElement($sTag);
 		
@@ -25,19 +25,19 @@ class BasePydj
 	}
 	
 	
-	private function _closeTag()
+	protected function _closeTag()
 	{
 		$this->_oXW->endElement();
 	}
 	
 	
-	private function _genTag($sTag, $sContent)
+	protected function _genTag($sTag, $sContent)
 	{
 		$this->_oXW->writeElement($sTag, $sContent);
 	}
 	
 	
-	private function _genAttr($sAttr, $sVal)
+	protected function _genAttr($sAttr, $sVal)
 	{
 		$this->_oXW->writeAttribute($sAttr, $sVal);
 	}
@@ -56,9 +56,7 @@ class BasePydj
 	
 	public function &Tag($sTag)
 	{
-		$sId = $this->_gUniqId();
-		
-		$this->_openTag($sTag, array('id' => $sId));
+		$this->_openTag($sTag);
 		
 		return $this;
 	}
@@ -92,23 +90,10 @@ class Pydj extends BasePydj
 {
 	const defaultTag = 'div';
 	
+	//private $_oXW;
 	
 	private $_sDT;
 	private $_sDL;
-	
-	
-	private $_slId;
-	
-	
-	private $_oXW;
-	
-	
-	private function _startXMLWriter()
-	{		
-		$this->_oXW = new XMLWriter();	
-		$this->_oXW->openMemory();
-		$this->_oXW->startDocument("1.0");
-	}
 		
 	
 	private function _gUniqId()
@@ -119,11 +104,11 @@ class Pydj extends BasePydj
 	
 	private function _genHead()
 	{
-		$this->_openTag("head");
+		parent::_openTag("head");
 		
-		$this->_genTag("title", $this->_sDT);
+		parent::_genTag("title", $this->_sDT);
 		
-		$this->_closeTag();
+		parent::_closeTag();
 	}
 	
 	private function _startHTML()
@@ -132,17 +117,17 @@ class Pydj extends BasePydj
 		
 		$this->_genHead();
 		
-		$this->_openTag("body");
+		parent::_openTag("body");
 	}
 	
 	
 	private function _endHTML()
 	{
 		// body
-		$this->_closeTag();
+		parent::_closeTag();
 		
 		// html
-		$this->_closeTag();
+		parent::_closeTag();
 	}
 	
 	
@@ -197,7 +182,7 @@ class Pydj extends BasePydj
 	
 	public function Flush()
 	{
-		$this->_oXW->_endHTML();
+		$this->_endHTML();
 		
 		echo parent::Flush();
 	}

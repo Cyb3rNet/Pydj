@@ -8,7 +8,7 @@
 
     include("Pydj.inc.php");
 	
-	$sTitle = "My HTML document";
+	$sTitle = "My XHTML document";
 	
 	$oPydj = new Pydj($sTitle);
 	
@@ -16,7 +16,7 @@
 	
 	$oPydj->Tag("a")->Attr("href", "http://www.github.com")->Content("github.com");
 	
-	// Echoes XML/HTML document
+	// Echoes XHTML document
 	$oPydj->Flush();
 
 ## Still Needs Some Work
