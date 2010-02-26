@@ -92,7 +92,6 @@ class Pydj extends BasePydj
 {
 	const defaultTag = 'div';
 	
-	//private $_oXW;
 	
 	private $_sDT;
 	private $_sDL;
@@ -113,9 +112,10 @@ class Pydj extends BasePydj
 		parent::_closeTag();
 	}
 	
+	
 	private function _startHTML()
 	{
-		$this->_openTag("html");
+		parent::_openTag("html");
 		
 		$this->_genHead();
 		
@@ -161,12 +161,11 @@ class Pydj extends BasePydj
 	
 	public function &Tag($sTag)
 	{
-		$sId = $this->_gUniqId();
-		
 		parent::Tag($sTag);
 		
 		return $this;
 	}
+	
 	
 	public function &Attr($sAttr, $sVal)
 	{
