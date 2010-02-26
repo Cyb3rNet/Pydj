@@ -5,7 +5,7 @@ include("Pdgen.inc.php");
 
 
 // Pdgen
-// Generates XHTML documents
+// Generates HTML documents
 
 
 $sTitle = "My first Pdgen document";
