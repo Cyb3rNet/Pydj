@@ -1,0 +1,4 @@
+0.1
+	Basic idea for quick XML/HTML document generation with PHP developed
+	Its functionality inherits from the developer's knowledge of XML/HTML, so it is not fool proof
+	Its usage is procedural, elements are generated as the methods are called, elements generated cannot be manipulated after
