@@ -1,4 +1,4 @@
->> Pdgen by Cyb3r
+>> Pydj by Cyb3r
 >>
 >> Version 0.1
 >>
@@ -6,18 +6,18 @@
 
 ## Usage
 
-    include("Pdgen.inc.php");
+    include("Pydj.inc.php");
 	
 	$sTitle = "My HTML document";
 	
-	$oPdgen = new Pdgen($sTitle);
+	$oPydj = new Pydj($sTitle);
 	
-	$oPdgen->Tag("h1")->Content("Hello World!");
+	$oPydj->Tag("h1")->Content("Hello World!");
 	
-	$oPdgen->Tag("a")->Attr("href", "http://www.github.com")->Content("github.com");
+	$oPydj->Tag("a")->Attr("href", "http://www.github.com")->Content("github.com");
 	
 	// Echoes XML/HTML document
-	$oPdgen->Flush();
+	$oPydj->Flush();
 
 ## Still Needs Some Work
 

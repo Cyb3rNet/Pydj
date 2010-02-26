@@ -1,7 +1,7 @@
 <?php
 
 
-class BasePdgen
+class BasePydj
 {
 	private $_oXW;
 	
@@ -88,7 +88,7 @@ class BasePdgen
 }
 
 
-class Pdgen extends BasePdgen
+class Pydj extends BasePydj
 {
 	const defaultTag = 'div';
 	
@@ -164,7 +164,9 @@ class Pdgen extends BasePdgen
 	
 	public function &Id($sId)
 	{
-		parent::Tag(self::defaultTag, array('id' => $sId));
+		parent::Tag(self::defaultTag);
+		
+		parent::Attr("id", $sId);
 		
 		return $this;
 	}
@@ -174,7 +176,7 @@ class Pdgen extends BasePdgen
 	{
 		$sId = $this->_gUniqId();
 		
-		parent::Tag($sTag, array('id' => $sId));
+		parent::Tag($sTag);
 		
 		return $this;
 	}
