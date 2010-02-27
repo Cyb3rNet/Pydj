@@ -1,3 +1,5 @@
+0.2
+	Extend the class usage to include HTML header elements; script and style
 0.1
 	Basic idea for quick XML/HTML document generation with PHP developed
 	Its functionality inherits from the developer's knowledge of XML/HTML, so it is not fool proof
