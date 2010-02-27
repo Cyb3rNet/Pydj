@@ -1,8 +1,10 @@
->> Pydj by Cyb3r
+>> Pydj by Serafim Junior Dos Santos Fagundes Cyb3r Web
 >>
 >> Version 0.2
 >>
 >> Quick HTML Document Creation / PHP 5
+>>
+>> Uses PHP 5 / XMLWriter
 
 ## Usage
 
@@ -52,7 +54,3 @@
 	$pydj->Flush();
 
 ## Still Needs Some Work
-
-
-
-~::~ Cyb3r ~::~
