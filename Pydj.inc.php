@@ -79,6 +79,14 @@ class BasePydj
 	}
 	
 	
+	public function Raw($sContent)
+	{
+		$this->_oXW->writeRaw($sContent);
+		
+		$this->_closeTag();
+	}
+	
+	
 	public function Flush()
 	{
 		$this->_oXW->endDocument();
@@ -95,7 +103,10 @@ class Pydj extends BasePydj
 	
 	private $_sDT;
 	private $_sDL;
-		
+	
+	
+	private $_bHeadClosed;
+	
 	
 	private function _gUniqId()
 	{
@@ -103,13 +114,30 @@ class Pydj extends BasePydj
 	}
 	
 	
-	private function _genHead()
+	private function _verifiyEndHead()
+	{
+		if (!$this->_bHeadClosed)
+		{
+			$this->_endHead();
+			
+			$this->_bHeadClosed = true;
+		}
+	}
+		
+	
+	private function _endHead()
+	{
+		parent::_closeTag();
+		
+		parent::_openTag("body");
+	}
+	
+	
+	private function _startHead()
 	{
 		parent::_openTag("head");
 		
 		parent::_genTag("title", $this->_sDT);
-		
-		parent::_closeTag();
 	}
 	
 	
@@ -117,9 +145,7 @@ class Pydj extends BasePydj
 	{
 		parent::_openTag("html");
 		
-		$this->_genHead();
-		
-		parent::_openTag("body");
+		$this->_startHead();
 	}
 	
 	
@@ -146,11 +172,46 @@ class Pydj extends BasePydj
 		parent::__construct();
 		
 		$this->_startHTML();
+		
+		$this->_startHead();
+		
+		$this->_bHeadClosed = false;
+	}
+	
+	
+	public function &Head()
+	{
+		if ($this->_bHeadClosed)
+			throw new Exception("Head is closed");
+	
+		return $this;
+	}
+	
+	
+	public function Style($sStyle)
+	{
+		parent::Tag("style")->Attr("type", "text/css")->Raw($sStyle);
+	}
+	
+	
+	public function Script($sScript, $sLanguage = "Javascript")
+	{
+		parent::Tag("script")->Attr("language", $sLanguage)->Raw($sScript);
+	}
+	
+	
+	public function ScriptFile($sScriptFile, $sLanguage = "Javascript")
+	{
+		parent::Tag("script")->Attr("language", $sLanguage)->Attr("src", $sScriptFile);
+		
+		parent::_closeTag();
 	}
 	
 	
 	public function &Id($sId)
 	{
+		$this->_verifiyEndHead();
+		
 		parent::Tag(self::defaultTag);
 		
 		parent::Attr("id", $sId);
@@ -161,6 +222,8 @@ class Pydj extends BasePydj
 	
 	public function &Tag($sTag)
 	{
+		$this->_verifiyEndHead();
+		
 		parent::Tag($sTag);
 		
 		return $this;
@@ -178,6 +241,12 @@ class Pydj extends BasePydj
 	public function Content($sContent)
 	{
 		parent::Content($sContent);
+	}
+	
+	
+	public function HTML($sHTML)
+	{
+		parent::Raw($sHTML);
 	}
 	
 	

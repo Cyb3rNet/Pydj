@@ -8,10 +8,24 @@ include("Pydj.inc.php");
 // Generates HTML documents
 
 
-$sTitle = "My first Pydj document";
+$sTitle = "My first Pydj 0.2 document 0.2";
 
+$pydj = new Pydj($sTitle, "en", $oHead);
 
-$pydj = new Pydj($sTitle);
+$pydj->Head()->Style("@import 'test.css';");
+
+$pydj->Head()->ScriptFile("test.js");
+
+$sScript = <<<SCRIPT
+
+window.onload = function () {
+	alert("I'm Script()");
+	withinOnLoad();
+}
+
+SCRIPT;
+
+$pydj->Head()->Script($sScript);
 
 $sStyle = <<<STYLE
 	color:#666;
@@ -29,6 +43,8 @@ $sStyle = <<<STYLE
 STYLE;
 
 $pydj->Tag("div")->Tag("p")->Attr("style", $sStyle)->Content("This is a paragraph in a div.");
+
+$pydj->Tag("code")->Content("This is code");
 
 $pydj->Flush();
 
