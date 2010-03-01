@@ -1,4 +1,4 @@
->> Pydj by Serafim Junior Dos Santos Fagundes Cyb3r Web
+>> Pydj by Serafim Junior Dos Santos Fagundes Cyb3r Net
 >>
 >> Version 0.2
 >>
