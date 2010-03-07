@@ -1,7 +1,10 @@
 <?php
 
-
-class BasePydj
+////
+//// CLASS - Base Pydj
+////
+//
+class BPydj
 {
 	protected $_oXW;
 	
@@ -86,6 +89,12 @@ class BasePydj
 		$this->_closeTag();
 	}
 	
+	public function __toString()
+	{
+		$this->_oXW->endDocument();
+		
+		return $this->_oXW->outputMemory(false);
+	}
 	
 	public function Flush()
 	{
@@ -96,7 +105,7 @@ class BasePydj
 }
 
 
-class Pydj extends BasePydj
+class Pydj extends BPydj
 {
 	const defaultTag = 'div';
 	
@@ -144,8 +153,6 @@ class Pydj extends BasePydj
 	private function _startHTML()
 	{
 		parent::_openTag("html");
-		
-		$this->_startHead();
 	}
 	
 	
