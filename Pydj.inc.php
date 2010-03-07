@@ -211,7 +211,7 @@ class Pydj extends BPydj
 	{
 		parent::Tag("script")->Attr("language", $sLanguage)->Attr("src", $sScriptFile);
 		
-		parent::_closeTag();
+		parent::Content("//");
 	}
 	
 	
@@ -248,6 +248,12 @@ class Pydj extends BPydj
 	public function Content($sContent)
 	{
 		parent::Content($sContent);
+	}
+	
+	
+	public function Close()
+	{
+		parent::_closeTag();
 	}
 	
 	
